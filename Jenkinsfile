@@ -2,13 +2,14 @@ pipeline {
     agent any
     
     tools{
-        jdk 'jdk17'
-        nodejs 'node16'
+        jdk 'jdk20'
+        nodejs 'node20'
         
     }
     
     environment{
         SCANNER_HOME= tool 'sonar-scanner'
+        
     }
     
     stages {
@@ -41,22 +42,26 @@ pipeline {
         
         
          stage('Install Dependencies') {
-            steps {
-                sh "npm install"
-            }
+    steps {
+        dir('/home/docker/appnode/workspace/bankapp/app/backend') {
+            sh 'npm install'
         }
+    }
+}
+
         
         stage('Backend') {
-            steps {
-                dir('/root/.jenkins/workspace/Bank/app/backend') {
-                    sh "npm install"
-                }
-            }
+    steps {
+        dir('/home/docker/appnode/workspace/bankapp/app/backend') {
+            sh 'npm install'
         }
+    }
+}
+
         
         stage('frontend') {
             steps {
-                dir('/root/.jenkins/workspace/Bank/app/frontend') {
+                dir('/home/docker/appnode/workspace/bankapp/app/frontend') {
                     sh "npm install"
                 }
             }

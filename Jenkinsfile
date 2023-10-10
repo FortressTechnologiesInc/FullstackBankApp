@@ -35,7 +35,7 @@ pipeline {
         stage('SONARQUBE ANALYSIS') {
             steps {
                 withSonarQubeEnv('sonar') {
-                    sh " $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Bank -Dsonar.projectKey=Bank "
+                    sh " $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Bankapp -Dsonar.projectKey=Bankapp "
                 }
             }
         }
@@ -43,7 +43,7 @@ pipeline {
         
          stage('Install Dependencies') {
     steps {
-        dir('/home/docker/appnode/workspace/bankapp/app/backend') {
+        dir('/root/appnode/workspace/bankapp/app') {
             sh 'npm install'
         }
     }
@@ -52,7 +52,7 @@ pipeline {
         
         stage('Backend') {
     steps {
-        dir('/home/docker/appnode/workspace/bankapp/app/backend') {
+        dir('/root/appnode/workspace/bankapp/app/backend/build') {
             sh 'npm install'
         }
     }
@@ -61,7 +61,7 @@ pipeline {
         
         stage('frontend') {
             steps {
-                dir('/home/docker/appnode/workspace/bankapp/app/frontend') {
+                dir('/root/appnode/workspace/bankapp/app/frontend/build') {
                     sh "npm install"
                 }
             }

@@ -2,13 +2,13 @@ pipeline {
     agent any
     
     tools{
-        jdk 'jdk20'
-        nodejs 'node20'
+        jdk 'jdk'
+        nodejs 'nodejs'
         
     }
     
     environment{
-        SCANNER_HOME= tool 'sonar-scanner'
+        SCANNER_HOME= tool 'scanner'
         
     }
     
@@ -43,7 +43,7 @@ pipeline {
         
          stage('Install Dependencies') {
     steps {
-        dir('/root/appnode/workspace/bankapp/app') {
+        dir('/root/appnode/workspace/FullstackBankApp/app') {
             sh 'npm install'
         }
     }

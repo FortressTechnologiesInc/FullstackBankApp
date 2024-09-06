@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    
+
       - name: Checkout code
         uses: actions/checkout@v3
         # Checks out the code from the repository
@@ -20,8 +20,20 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20' # Specify the Node.js version as needed
+          node-version: '18' # Specify the Node.js version as needed
           # Sets up the specified Node.js version
+
+      - name: List directory contents
+        run: |
+          echo "Listing contents of the root directory:"
+          ls -la
+          echo "Listing contents of the app directory:"
+          cd app && ls -la
+          echo "Listing contents of the backend directory:"
+          cd backend && ls -la
+          echo "Listing contents of the build directory:"
+          cd build && ls -la
+        # Debugging step to check if the directories exist and contain files
 
       - name: Install dependencies
         run: |
@@ -34,6 +46,7 @@ jobs:
           cd app/backend/build
           npm install
         # Installs dependencies for the backend
+        continue-on-error: true # Allow the job to continue even if this step fails for debugging
 
       - name: Frontend dependencies
         run: |
@@ -43,5 +56,6 @@ jobs:
 
       - name: Deploy to Container
         run: |
+          cd app
           npm run compose:up -d
-        # Deploys the application using Docker Compose
+        # Deploys the application using Docker Compose located in app/

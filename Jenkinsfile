@@ -52,7 +52,7 @@ pipeline {
         
         stage('Backend') {
     steps {
-        dir('/root/appnode/workspace/bankapp/app/backend/build') {
+        dir('/root/appnode/workspace/FullstackBankApp/app/backend/build') {
             sh 'npm install'
         }
     }
@@ -61,7 +61,7 @@ pipeline {
         
         stage('frontend') {
             steps {
-                dir('/root/appnode/workspace/bankapp/app/frontend/build') {
+                dir('/root/appnode/workspace/FullstackBankApp/app/frontend/build') {
                     sh "npm install"
                 }
             }

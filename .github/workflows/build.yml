@@ -20,7 +20,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20' # Specify the Node.js version as needed
+          node-version: '18' # Specify the Node.js version as needed
           # Sets up the specified Node.js version
 
       - name: Install dependencies (app)
@@ -38,6 +38,22 @@ jobs:
         working-directory: app/frontend
         # Installs dependencies for the frontend
 
+      - name: Set up Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+          sudo systemctl start docker
+          sudo systemctl enable docker
+        # Installs Docker and starts the Docker service
+
+      - name: Install Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/v2.19.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          docker-compose --version
+        # Installs Docker Compose and verifies the installation
+
       - name: Deploy to Container
         run: npm run compose:up -d
-       
+        working-directory: app
+        # Deploys the application using Docker Compose located in app/

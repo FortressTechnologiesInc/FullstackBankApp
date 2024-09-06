@@ -1,0 +1,52 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11' # Specify the JDK version as needed
+          distribution: 'adopt-openjdk'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Specify the Node.js version as needed
+
+      - name: Install dependencies
+        run: |
+          cd app
+          npm install
+
+      - name: Backend dependencies
+        run: |
+          cd app/backend/build
+          npm install
+
+      - name: Frontend dependencies
+        run: |
+          cd app/frontend/build
+          npm install
+
+    
+
+
+     
+
+      - name: Deploy to Container
+        run: |
+          npm run compose:up -d

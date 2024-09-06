@@ -15,38 +15,33 @@ jobs:
     
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11' # Specify the JDK version as needed
-          distribution: 'adopt-openjdk'
+        # Checks out the code from the repository
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Specify the Node.js version as needed
+          node-version: '20' # Specify the Node.js version as needed
+          # Sets up the specified Node.js version
 
       - name: Install dependencies
         run: |
           cd app
           npm install
+        # Installs dependencies for the main application
 
       - name: Backend dependencies
         run: |
           cd app/backend/build
           npm install
+        # Installs dependencies for the backend
 
       - name: Frontend dependencies
         run: |
           cd app/frontend/build
           npm install
-
-    
-
-
-     
+        # Installs dependencies for the frontend
 
       - name: Deploy to Container
         run: |
           npm run compose:up -d
+        # Deploys the application using Docker Compose

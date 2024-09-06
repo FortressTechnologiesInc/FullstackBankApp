@@ -40,5 +40,5 @@ jobs:
 
       - name: Deploy to Container
         run: npm run compose:up -d
-        working-directory: app
+        working-directory: .
         # Deploys the application using Docker Compose located in app/
